@@ -26,3 +26,11 @@ Before publishing calendar or chore-row changes:
 - Confirmed green completion reveal and blue trade reveal, including a native left drag on the 393px layout; no completion or trade mutations submitted.
 - Visually inspected dark Me, preference-strength popup, Household, Add chore modal, and History. Watermarks are 120px on mobile and 132px on desktop, shifted inward horizontally and cropped vertically at card edges.
 - TypeScript, production build, and whitespace checks pass. Physical iPhone/Safari verification remains outstanding.
+
+## Shared cards and history scope
+
+- History defaults to Everyone independently of the Overview person filter. Filter completions by recorded completer, falling back to the assignee only when no completer ID exists. Include inactive household members in the picker.
+- Validate Everyone and each person against distinct completion fixtures, including an assignment completed by someone other than its current owner. Check filtered Board log counts and empty states separately.
+- Chore records in Overview, History, Me, and Household use `HouseholdCard` and shared spacing, minimum height, radius, typography, and watermark tokens. Additional record details may increase height; never truncate timestamps or chore names to force a fixed height.
+- Mobile navigation has four evenly spaced items and no detached add button. Household retains Add chore. Check 320px as well as the larger mobile breakpoint.
+- Local follow-up: independent History filters returned all three people, then one correct completer per selection using isolated temporary fixtures. Light and dark layouts in all four tabs had no horizontal overflow at 320, 393, 768, and 1280px. Temporary fixtures were removed afterward; production data was not changed.
