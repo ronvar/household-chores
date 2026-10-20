@@ -21,6 +21,7 @@
   --ui-card-detail-size: 15px;
   --ui-body-size: 15px;
   --ui-label-size: 14px;
+  --ui-tab-size: 11px;
   --background: var(--ui-canvas);
   --foreground: var(--ui-text);
   --border: var(--ui-line);
@@ -361,7 +362,7 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 body :is([data-slot=dialog-description],.editor-form label,.editor-form legend,.editor-dialog .form-actions>[data-slot=button]) { font-size: var(--ui-body-size); line-height: 1.5; }
 @media(max-width:760px) {
   .household-ui .mobile-nav button { min-height: 62px; gap: 5px; }
-  .household-ui .mobile-nav button>span:not(.nav-avatar):not(.mobile-action-badge) { font-size: 11px; line-height: 1.25; font-weight: 600; }
+  .household-ui .mobile-nav button>span:not(.nav-avatar):not(.mobile-action-badge) { font-size: var(--ui-tab-size); line-height: 1.25; font-weight: 600; }
   .household-ui .me-view .profile-card { min-width: 0; }
   .household-ui .me-view .profile-actions { max-width: 100%; }
   .household-ui .me-view .profile-upload { max-width: 100%; }
@@ -379,3 +380,8 @@ body :is([data-slot=dialog-description],.editor-form label,.editor-form legend,.
   .household-ui .mobile-nav { left: 8px!important; right: 8px!important; padding: 4px; gap: 0; }
   .household-ui :is(.overview-mode,.history-switch) button { padding-inline: 6px; font-size: var(--ui-label-size); }
 }
+.household-ui :is(.overview-mode,.scope-switch,.history-switch,.appearance-switch,.chore-view-switch,.catalog-filters) button,
+.household-ui .nav-item,
+.household-ui .identity-switch,
+.household-ui .identity-switch>span:not(.avatar),
+.household-ui .profile-choose { font-size: var(--ui-tab-size); }
