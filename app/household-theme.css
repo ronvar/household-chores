@@ -240,8 +240,8 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 .household-ui .history-card-list, .household-ui .personal-trades, .household-ui .preference-list { display: grid; gap: 10px; }
 .history-person-filter { width: min(100%,320px); margin-bottom: 14px; }
 .history-filter-label { display: block; margin-bottom: 7px; color: var(--ui-secondary); font-size: 12px; font-weight: 600; }
-.history-filters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-bottom: 14px; }
-.history-filters .history-person-filter { width: 100%; margin-bottom: 0; }
+.history-filters { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.history-filters .history-person-filter { width: auto; margin-bottom: 0; }
 .completion-week-filter { max-width: 360px; padding-bottom: 16px; }
 .household-ui .completion-card { display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: 12px; align-items: center; }
 .household-ui .history-avatar, .household-ui .history-avatar .avatar { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border-radius: 50%; overflow: hidden; line-height: 1; }
@@ -273,7 +273,6 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 @media(max-width:760px) {
   .household-ui { --ui-card-padding: 18px; --ui-card-min-height: 96px; --ui-card-title-size: 15px; --ui-card-detail-size: 13px; }
   .history-person-filter { width: 100%; }
-  .history-filters { grid-template-columns: minmax(0,1fr); }
   .household-ui .topbar,.household-ui .topbar-inner { height: 70px; }.household-ui .topbar-inner { padding: 0 20px; }.household-ui .brand { font-size: 27px; }.household-ui .identity-switch { display: flex; }.household-ui .identity-switch .avatar { display: none; }.household-ui .identity-switch svg { display: none; }
   .household-ui .layout { display: block; padding: 16px 20px 0; }.household-ui .main-area { padding: 0 0 calc(112px + env(safe-area-inset-bottom)); }.household-ui .sidebar { display: none; }
   .household-ui .overview-mode { margin-bottom: 15px; }.household-ui .board-section { margin-top: 22px; }.household-ui .board-line { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }.household-ui .chore-board-title h1 { font-size: 21px; }
