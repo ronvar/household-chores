@@ -225,6 +225,7 @@ body .board-menu { background: var(--ui-card)!important; color: var(--ui-text); 
 body .board-menu [data-slot=dropdown-menu-radio-item], body .board-menu [data-slot=dropdown-menu-item] { background: var(--ui-card); }
 body .board-menu [data-slot=dropdown-menu-radio-item]:focus, body .board-menu [data-slot=dropdown-menu-item]:focus { background: var(--ui-pill); }
 body [data-household-select] { display: grid!important; grid-template-columns: minmax(0,1fr) 16px; align-items: center; min-height: 44px; padding: 11px 12px!important; background: var(--ui-card); color: var(--ui-text); border-color: var(--ui-line); }
+body [data-household-select][data-compact] { grid-template-columns: 24px minmax(0,1fr) 14px; min-height: 40px; padding: 7px 10px!important; gap: 6px; }
 body [data-household-select]>svg { position: static; width: 16px; height: 16px; margin: 0; align-self: center; }
 body .editor-dialog .form-actions>[data-slot=button] { min-height: 38px; border-radius: 12px; border: 1px solid var(--ui-line); background: var(--ui-pill); color: var(--ui-text); padding: 8px 16px; box-shadow: none; }
 body .editor-dialog .form-actions>[data-slot=button]:last-child { background: var(--ui-blue); color: #fff; border-color: transparent; }
@@ -241,8 +242,8 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 .household-ui .history-card-list, .household-ui .personal-trades, .household-ui .preference-list { display: grid; gap: 10px; }
 .history-person-filter { width: min(100%,320px); margin-bottom: 14px; }
 .history-filter-label { display: block; margin-bottom: 7px; color: var(--ui-secondary); font-size: 12px; font-weight: 600; }
-.history-filters { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.history-filters .history-person-filter { width: auto; margin-bottom: 0; }
+.history-filters { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-bottom: 14px; }
+.history-filters .history-person-filter, .history-filters .history-week-filter { width: auto; min-width: 0; max-width: calc(50% - 4px); margin-bottom: 0; }
 .completion-week-filter { max-width: 360px; padding-bottom: 16px; }
 .household-ui .completion-card { display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: 12px; align-items: center; }
 .household-ui .history-avatar, .household-ui .history-avatar .avatar { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border-radius: 50%; overflow: hidden; line-height: 1; }

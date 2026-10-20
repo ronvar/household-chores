@@ -49,9 +49,9 @@ export default function HouseholdSelect({ label, value, onValueChange, options, 
   useEffect(() => { if (unavailable) setOpen(false); }, [unavailable]);
 
   return <Select.Root value={selected?.value ?? ""} onValueChange={onValueChange} required={required} disabled={unavailable} open={open} onOpenChange={setOpen}>
-    <Select.Trigger className={`${styles.trigger} ${rich ? styles.rich : ""} ${compact ? styles.compact : ""}`} aria-label={compact && selected ? `${label}: ${selected.label}` : label} title={compact ? `${label}: ${selected?.label ?? placeholder}` : undefined} data-household-select="" data-rich={rich || undefined}>
-      {compact && selected ? <span className={styles.compactIcon} aria-hidden="true">{selected.icon}</span> : selected ? <OptionCopy option={selected} details={rich} /> : <span className={styles.placeholder}>{options.length ? placeholder : emptyText}</span>}
-      {!compact && <Select.Icon asChild><ChevronDown className={styles.chevron} size={16} aria-hidden="true" /></Select.Icon>}
+    <Select.Trigger className={`${styles.trigger} ${rich ? styles.rich : ""} ${compact ? styles.compact : ""}`} aria-label={compact && selected ? `${label}: ${selected.label}` : label} title={compact ? `${label}: ${selected?.label ?? placeholder}` : undefined} data-household-select="" data-compact={compact || undefined} data-rich={rich || undefined}>
+      {compact && selected ? <><span className={styles.compactIcon} aria-hidden="true">{selected.icon}</span><span className={styles.compactLabel}>{selected.label}</span></> : selected ? <OptionCopy option={selected} details={rich} /> : <span className={styles.placeholder}>{options.length ? placeholder : emptyText}</span>}
+      <Select.Icon asChild><ChevronDown className={styles.chevron} size={16} aria-hidden="true" /></Select.Icon>
     </Select.Trigger>
     <Select.Portal>
       <Select.Content className={styles.content} position="popper" align="start" sideOffset={6} collisionPadding={16} aria-label={`${label} options`}>
