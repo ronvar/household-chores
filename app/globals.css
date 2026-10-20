@@ -193,4 +193,20 @@ select{appearance:none;-webkit-appearance:none;background-color:rgba(255,255,255
 .app-update-notice button{flex:none;height:36px;padding:0 14px;border:0;border-radius:10px;background:#087cff;color:#fff;font-size:13px;font-weight:650;cursor:pointer}
 .app-update-notice button:disabled{opacity:.5;cursor:wait}
 .app-refresh-button:focus-visible,.app-update-notice button:focus-visible{outline:3px solid #087cff55;outline-offset:3px}
+.pending-stack{margin-top:0;border-radius:24px;overflow:hidden}
+.pending-stack summary .completion-count{font-size:13px;font-weight:650;color:#777780;background:#f0f0f4;padding:3px 8px;border-radius:20px}
+.swipe-instructions{margin:0;padding:0 24px 18px;color:#8e8e98;font-size:12px;line-height:1.5}
+.pending-content{padding:0 18px 18px;background:#fff}
+.pending-content .task-panel.sorted-panel{padding:0;border:1px solid #eaeaf0;border-radius:20px}
+.task-list>[data-swipe-chore]+[data-swipe-chore]{border-top:1px solid #ececf0}
+.task-row.swipe-task-row,.task-row.swipe-task-row.overdue-row{grid-template-columns:42px 0 minmax(0,1fr);gap:0 10px;min-height:88px;margin:0;padding:16px 20px;border:0;border-radius:0;background:#fff;box-shadow:none;transition:grid-template-columns .3s cubic-bezier(.22,.8,.28,1)}
+.task-row.swipe-task-row.overdue-row{box-shadow:inset 0 0 20px #ff950038}
+.task-row.swipe-task-row.confirming-row{grid-template-columns:42px 42px minmax(0,1fr)}
+.swipe-task-row .task-main{margin-left:-10px}
+.swipe-task-row.confirming-row .task-main{margin-left:0}
+.swipe-task-row .task-main>span{display:block;line-height:1.5}
+.swipe-task-row .task-main .task-due-copy{display:inline;margin:0;font-size:inherit;font-weight:550}
+.task-due-copy.urgent{color:#c51f3c}.task-due-copy.soon{color:#a65a0b}.task-due-copy.later{color:#248342}.task-due-copy.waiting{color:#858590}
+@media(max-width:760px){.swipe-instructions{padding:0 20px 16px}.pending-content{padding:0 12px 12px}.task-row.swipe-task-row,.task-row.swipe-task-row.overdue-row{grid-template-columns:38px 0 minmax(0,1fr);padding:15px 18px;min-height:84px}.task-row.swipe-task-row.confirming-row{grid-template-columns:38px 38px minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.task-row.swipe-task-row,.swipe-task-row .task-main{transition:none}}
 @media(max-width:760px){.app-update-notice{bottom:calc(100px + env(safe-area-inset-bottom));gap:12px}.topbar-controls{gap:8px}}

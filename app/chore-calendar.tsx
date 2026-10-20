@@ -18,7 +18,7 @@ type CalendarProps<Item extends CalendarAssignment> = {
   items: Item[];
   today: string;
   weekStart: string;
-  renderTask: (item: Item, calendar?: boolean) => ReactNode;
+  renderTask: (item: Item, calendar?: boolean, windowStrip?: ReactNode) => ReactNode;
 };
 
 function formatDay(date: string, options: Intl.DateTimeFormatOptions) {
@@ -92,7 +92,7 @@ export default function ChoreCalendar<Item extends CalendarAssignment>({ items, 
       <div className={styles.legend}><span><i />Available window</span><span><i className={styles.legendDeadline} />Deadline</span><span>Do it any time in between</span></div>
     </div> : <div className={styles.mobile} aria-label="Pending chores grouped by deadline">{groups.map((group) => <section className={styles.deadlineGroup} key={group.date} aria-label={`Complete by ${formatDay(group.date, { weekday: "long", month: "short", day: "numeric" })}`}>
       <div className={styles.groupHeading}><time className={`${styles.dateCircle} ${group.date === today ? styles.dateToday : ""}`} dateTime={group.date}>{formatDay(group.date, { day: "numeric" })}</time><h3>{group.date < today ? "Missed" : "Complete by"} {formatDay(group.date, { weekday: "long" })}</h3><span className={`${styles.groupBadge} ${group.date === today ? styles.todayBadge : ""}`}>{group.date === today ? "Today" : group.date === calendarAdd(today, 1) ? "Tomorrow" : `${group.items.length} chore${group.items.length === 1 ? "" : "s"}`}</span></div>
-      {group.items.map((item) => <div className={styles.mobileTask} key={item.id}><div className={styles.label}>{renderTask(item)}</div><WindowStrip item={item} missed={completionStatus(item, today, weekStart) === "missed"} early={completionStatus(item, today, weekStart) === "early"} /></div>)}
+      {group.items.map((item) => <div className={styles.mobileTask} key={item.id}><div className={styles.label}>{renderTask(item, true, <WindowStrip item={item} missed={completionStatus(item, today, weekStart) === "missed"} early={completionStatus(item, today, weekStart) === "early"} />)}</div></div>)}
     </section>)}{!groups.length && <div className={styles.empty}>No pending chores this week.</div>}</div>}
     {!!missedTurns.length && <details className={styles.pastMisses}><summary><span>Past missed turns <span className={styles.missedCount}>{missedTurns.length}</span></span><ChevronDown size={18} aria-hidden="true" /></summary><p>Closed windows stay recorded. Next week’s matching turn stays with the person who missed it.</p>{missedTurns.map((item) => <div className={styles.carryoverTask} key={item.id}>{renderTask(item, false)}</div>)}</details>}
   </div>;

@@ -14,7 +14,17 @@ A responsive chore-management app for a shared household, with recurring assignm
 - Administrator-managed people, approvals, chore editing, and individual reassignment.
 - Installable Home Screen app with Web Push reminders.
 
-## Stack
+## Interface
+
+The overview has Simple, People, and Quick Filters layouts. Layout, Calendar/List, person, and appearance choices are remembered on the device. Appearance follows the system unless Light or Dark is selected in Me.
+
+Chore cards use relative deadlines and subtle status glows, without point totals. Swipe right to reveal completion or reopening, and left to propose a trade. A full completion swipe still asks for confirmation. Keyboard and screen-reader actions remain available. Pending starts expanded; missed turns and this week's completed record are separate collapsible sections. Older completions remain in History.
+
+Effort values still drive fair allocation and remain editable in Household. Trade pickers show the owner, precise deadline, and completion window for each occurrence. The catalog supports search and schedule filters.
+
+See [the interface implementation notes](docs/interface-notes.md) for the reference-to-production decisions and verification scope.
+
+## Technology
 
 React, TypeScript, Vinext/Vite, Cloudflare Workers, D1, Drizzle, and Web Push. The reminder service is a separate Worker under `reminder-worker/`.
 
