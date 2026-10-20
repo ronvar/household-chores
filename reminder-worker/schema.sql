@@ -12,3 +12,13 @@ CREATE TABLE IF NOT EXISTS open_assignments (
   person_id INTEGER NOT NULL,
   due_date TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS turn_notifications (
+  endpoint TEXT NOT NULL REFERENCES subscriptions(endpoint) ON DELETE CASCADE,
+  assignment_id INTEGER NOT NULL,
+  person_id INTEGER NOT NULL,
+  available_date TEXT NOT NULL,
+  due_date TEXT NOT NULL,
+  claimed_at TEXT NOT NULL,
+  sent_at TEXT,
+  PRIMARY KEY (endpoint, assignment_id, person_id, available_date, due_date)
+);

@@ -11,7 +11,7 @@ interface Env {
 
 type Subscription = { endpoint: string; person_id: number; p256dh: string; auth: string; timezone: string; last_sent_date: string | null };
 type OpenAssignment = { id: number; personId: number; dueDate: string };
-type ReminderAssignment = { person_id: number; scheduled_date: string; due_date: string; available_date?: string | null; completed_at: string | null; repeated: boolean };
+type ReminderAssignment = { id: number; title_snapshot: string; person_id: number; scheduled_date: string; due_date: string; available_date?: string | null; completed_at: string | null; repeated: boolean };
 type ReminderBoard = { today: string; weekStart: string; assignments: ReminderAssignment[] };
 
 async function deliver(env: Env, subscription: Subscription, body: string, count: number, title = "Household chores", tag = "daily-chores", ttl = 3600) {
@@ -33,8 +33,8 @@ async function deliver(env: Env, subscription: Subscription, body: string, count
   return fetch(details.endpoint, { method: "POST", headers: details.headers as HeadersInit, body: details.body ? Uint8Array.from(details.body).buffer as ArrayBuffer : undefined });
 }
 
-function localTime(timezone: string) {
-  const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+function localTime(timezone: string, now = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).formatToParts(now);
   const part = (type: string) => parts.find((item) => item.type === type)?.value ?? "";
   return { date: `${part("year")}-${part("month")}-${part("day")}`, hour: Number(part("hour")) };
 }
@@ -47,31 +47,76 @@ function validSubscription(value: unknown): value is { endpoint: string; keys: {
     /^[A-Za-z0-9_-]{40,256}$/.test(subscription.keys?.p256dh ?? "") && /^[A-Za-z0-9_-]{16,256}$/.test(subscription.keys?.auth ?? "");
 }
 
-async function sendReminders(env: Env) {
+async function sendTurnNotifications(env: Env, subscription: Subscription, board: ReminderBoard, available: ReminderAssignment[], now: Date) {
+  const starting = available.filter((assignment) => assignment.person_id === subscription.person_id && assignment.available_date === board.today);
+  if (!starting.length) return;
+  const prior = await env.DB.prepare("SELECT assignment_id, person_id, available_date, due_date, claimed_at, sent_at FROM turn_notifications WHERE endpoint = ? AND available_date = ?").bind(subscription.endpoint, board.today).all<{ assignment_id: number; person_id: number; available_date: string; due_date: string; claimed_at: string; sent_at: string | null }>();
+  const claimedAt = now.toISOString();
+  const retryBefore = new Date(now.getTime() - 15 * 60 * 1000).toISOString();
+  const count = available.filter((assignment) => assignment.person_id === subscription.person_id).length;
+  for (const assignment of starting) {
+    const previous = prior.results.find((item) => item.assignment_id === assignment.id && item.person_id === assignment.person_id && item.due_date === assignment.due_date);
+    if (previous && (previous.sent_at || previous.claimed_at > retryBefore)) continue;
+    const values = [subscription.endpoint, assignment.id, assignment.person_id, board.today, assignment.due_date];
+    const claimed = await env.DB.prepare("INSERT INTO turn_notifications (endpoint, assignment_id, person_id, available_date, due_date, claimed_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(endpoint, assignment_id, person_id, available_date, due_date) DO UPDATE SET claimed_at = excluded.claimed_at WHERE turn_notifications.sent_at IS NULL AND turn_notifications.claimed_at <= ?").bind(...values, claimedAt, retryBefore).run();
+    if (!claimed.meta.changes) continue;
+    const release = () => env.DB.prepare("DELETE FROM turn_notifications WHERE endpoint = ? AND assignment_id = ? AND person_id = ? AND available_date = ? AND due_date = ? AND claimed_at = ? AND sent_at IS NULL").bind(...values, claimedAt).run();
+    try {
+      const deadline = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long", month: "short", day: "numeric" }).format(new Date(`${assignment.due_date}T12:00:00Z`));
+      const body = `It’s your turn to do ${assignment.title_snapshot.slice(0, 140)}. You have until ${deadline}.`;
+      const response = await deliver(env, subscription, body, count, "It’s your turn", `chore-turn-${assignment.id}-${assignment.person_id}-${board.today}`, 7200);
+      if (response.status === 404 || response.status === 410) {
+        await env.DB.prepare("DELETE FROM subscriptions WHERE endpoint = ?").bind(subscription.endpoint).run();
+        return;
+      }
+      if (!response.ok) {
+        await release();
+        console.error("Turn notification rejected", { assignmentId: assignment.id, status: response.status });
+        continue;
+      }
+      await env.DB.prepare("UPDATE turn_notifications SET sent_at = ? WHERE endpoint = ? AND assignment_id = ? AND person_id = ? AND available_date = ? AND due_date = ? AND claimed_at = ?").bind(claimedAt, ...values, claimedAt).run();
+      console.log("Turn notification delivered", { assignmentId: assignment.id, personId: assignment.person_id });
+    } catch (error) {
+      await release();
+      console.error("Turn notification failed", { assignmentId: assignment.id, error });
+    }
+  }
+}
+
+async function sendReminders(env: Env, now = new Date()) {
   const subscriptions = await env.DB.prepare("SELECT * FROM subscriptions ORDER BY created_at").all<Subscription>();
   const pending = subscriptions.results.filter((subscription) => {
-    const { date, hour } = localTime(subscription.timezone);
+    const { date, hour } = localTime(subscription.timezone, now);
     const slot = `${date}@${hour}`;
     return [10, 14, 18].includes(hour) && subscription.last_sent_date !== date && subscription.last_sent_date !== slot;
   });
-  if (!pending.length) return;
+  const turnSubscriptions = subscriptions.results.filter((subscription) => {
+    const { hour } = localTime(subscription.timezone, now);
+    return hour >= 9 && hour <= 20;
+  });
+  if (!pending.length && !turnSubscriptions.length) return;
   let board: ReminderBoard;
   try {
-    const today = localTime("America/Los_Angeles").date;
+    const today = localTime("America/Los_Angeles", now).date;
     const origin = new URL(env.HOUSEHOLD_SITE_URL).origin;
     const response = await fetch(`${origin}/api/household?today=${today}`, { cache: "no-store", redirect: "error", signal: AbortSignal.timeout(10000) });
     if (!response.ok) throw new Error(`Household refresh failed: ${response.status}`);
     const result = await response.json() as ReminderBoard;
     const validDate = (value: unknown) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
-    if (result.today !== today || !validDate(result.weekStart) || !Array.isArray(result.assignments) || result.assignments.some((assignment) => !Number.isInteger(assignment.person_id) || assignment.person_id < 1 || !validDate(assignment.scheduled_date) || !validDate(assignment.due_date) || (assignment.available_date != null && !validDate(assignment.available_date)) || (assignment.completed_at !== null && typeof assignment.completed_at !== "string") || typeof assignment.repeated !== "boolean")) throw new Error("Household refresh returned an invalid board.");
+    if (result.today !== today || !validDate(result.weekStart) || !Array.isArray(result.assignments) || result.assignments.some((assignment) => !Number.isInteger(assignment.id) || assignment.id < 1 || typeof assignment.title_snapshot !== "string" || !assignment.title_snapshot.trim() || !Number.isInteger(assignment.person_id) || assignment.person_id < 1 || !validDate(assignment.scheduled_date) || !validDate(assignment.due_date) || (assignment.available_date != null && !validDate(assignment.available_date)) || (assignment.completed_at !== null && typeof assignment.completed_at !== "string") || typeof assignment.repeated !== "boolean")) throw new Error("Household refresh returned an invalid board.");
     board = result;
   } catch (error) {
     console.error("Skipping reminders: current chore eligibility could not be verified", error);
     return;
   }
-  const eligible = board.assignments.filter((assignment) => assignment.due_date <= board.today && completionStatus(assignment, board.today, board.weekStart) === "available");
+  const available = board.assignments.filter((assignment) => completionStatus(assignment, board.today, board.weekStart) === "available");
+  for (const subscription of turnSubscriptions) {
+    try { await sendTurnNotifications(env, subscription, board, available, now); }
+    catch (error) { console.error("Turn notifications could not be processed", { personId: subscription.person_id, error }); }
+  }
+  const eligible = available.filter((assignment) => assignment.due_date <= board.today);
   for (const subscription of pending) {
-    const { date, hour } = localTime(subscription.timezone);
+    const { date, hour } = localTime(subscription.timezone, now);
     const slot = `${date}@${hour}`;
     const assignments = eligible.filter((assignment) => assignment.person_id === subscription.person_id);
     const due = assignments.length;

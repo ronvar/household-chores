@@ -57,6 +57,8 @@ The reminder Worker also requires `SYNC_SECRET` (matching `REMINDER_WORKER_SECRE
 
 Set secrets through the deployment environment or Worker secret commands, never in tracked files. Create your own D1 databases and replace the placeholder database ID in `reminder-worker/wrangler.jsonc`. The hosting manifest retains the logical `DB` binding but does not contain the original deployment's project ID.
 
+Apply `reminder-worker/schema.sql` to the reminder database before deploying the reminder Worker. Its existing hourly cron sends a turn-start notification to each subscribed device when a chore becomes available, beginning at 9am in that device’s timezone and retrying through 8pm. Each notification names the chore and its household-calendar deadline. Completed, future, and locked turns are excluded. Delivery records prevent repeated turn-start messages without affecting due-day or overdue reminders; failed pushes can retry on a later hourly run.
+
 ## Authentication and hosting
 
 Selecting a person identifies this device's chore view; it is not account authentication. Administrator actions separately require the hosting platform's verified identity. The server-side authentication adapter and reserved sign-in routes are retained so those checks remain intact. Deploying outside the original platform requires integrating an equivalent verified identity provider; do not remove the administrator check.
