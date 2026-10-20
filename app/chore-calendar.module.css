@@ -29,13 +29,14 @@
 
 .desktop,
 .deadlineGroup,
-.carryover,
 .pastMisses {
   background: var(--ui-card, #fff);
   border: 1px solid var(--ui-line, #e9e9ef);
   border-radius: 24px;
   overflow: hidden;
 }
+
+.carryover { display: grid; gap: 10px; min-width: 0; }
 
 .desktopHeader,
 .desktopRow {
@@ -123,11 +124,11 @@
 .miniWindow.muted .miniDay i { background: var(--ui-card, #eeeef3); border-color: var(--ui-muted, #d8d8e0); box-shadow: none; }
 .miniWindow.muted .deadlineText { color: var(--ui-muted, #8e8e98); }
 
-.carryoverHeading { gap: 10px; padding: 18px 20px 10px; color: #b56416; }
+.carryoverHeading { gap: 10px; padding: 0 2px 4px; color: #b56416; }
 .carryoverHeading h3 { color: var(--ui-text, #22222a); font-size: 16px; line-height: 1.4; margin: 0; }
 .carryoverHeading p { font-size: 12px; color: var(--ui-muted, #8e8e98); margin: 3px 0 0; line-height: 1.4; }
 .carryoverTask { padding: 0; }
-.carryoverTask + .carryoverTask { border-top: 1px solid var(--calendar-line); }
+.pastMisses .carryoverTask + .carryoverTask { border-top: 1px solid var(--calendar-line); }
 .calendar .carryoverTask :global(.task-row) { grid-template-columns: 42px 0 minmax(0, 1fr) auto auto; }
 .calendar .carryoverTask :global(.task-row.confirming-row) { grid-template-columns: 42px 42px minmax(0, 1fr) auto auto; }
 .calendar .carryoverTask :global(.task-main strong) { font-size: 14px; line-height: 1.4; }
