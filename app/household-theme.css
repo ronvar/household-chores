@@ -138,7 +138,7 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .cancel-slot { height: 26px; position: relative; z-index: 1; }
 .household-ui .cancel-complete, .household-ui .confirming-row .cancel-complete { width: 26px!important; height: 26px; }
 .household-ui .cancel-complete svg { width: 16px; height: 16px; }
-.chore-watermark { position: absolute; left: 60%; right: auto; top: 50%; transform: translate(-50%,-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
+.chore-watermark { position: absolute; left: 70%; right: auto; top: 50%; transform: translate(-50%,-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
 .household-ui .board-section .chore-watermark { display: block; }
 .household-ui .board-section .task-list .task-row.swipe-task-row { grid-template-columns: minmax(0,1fr) 110px; }
 .household-ui .board-section .task-list .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr) 110px; }
