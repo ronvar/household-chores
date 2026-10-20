@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { Select } from "radix-ui";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { ScrollArea, Select } from "radix-ui";
+import { Check, ChevronDown } from "lucide-react";
 import styles from "./household-select.module.css";
 
 export type HouseholdOption = {
@@ -55,8 +55,9 @@ export default function HouseholdSelect({ label, value, onValueChange, options, 
     </Select.Trigger>
     <Select.Portal>
       <Select.Content className={styles.content} position="popper" align="start" sideOffset={6} collisionPadding={16} aria-label={`${label} options`}>
-        <Select.ScrollUpButton className={styles.scroll}><ChevronUp size={16} aria-hidden="true" /></Select.ScrollUpButton>
-        <Select.Viewport className={styles.viewport}>
+        <ScrollArea.Root className={styles.scrollArea} type="auto">
+        <Select.Viewport asChild>
+        <ScrollArea.Viewport className={styles.viewport}>
           {groups.map((group) => <Select.Group key={group}>
           {group && <Select.Label className={styles.groupLabel}>{group}</Select.Label>}
           {options.filter((option) => (option.group ?? "") === group).map((option) => <Select.Item key={option.value} value={option.value} className={styles.item} textValue={`${option.label} ${option.description ?? ""} ${option.detail ?? ""}`} aria-label={[option.label, option.description, option.detail, option.note].filter(Boolean).join(" · ")}>
@@ -64,8 +65,10 @@ export default function HouseholdSelect({ label, value, onValueChange, options, 
             <span className={styles.check}><Select.ItemIndicator><Check size={16} aria-hidden="true" /></Select.ItemIndicator></span>
             <span className={styles.srOnly}><Select.ItemText>{[option.label, option.description, option.detail, option.note].filter(Boolean).join(" · ")}</Select.ItemText></span>
           </Select.Item>)}</Select.Group>)}
+        </ScrollArea.Viewport>
         </Select.Viewport>
-        <Select.ScrollDownButton className={styles.scroll}><ChevronDown size={16} aria-hidden="true" /></Select.ScrollDownButton>
+        <ScrollArea.Scrollbar className={styles.scrollbar} orientation="vertical"><ScrollArea.Thumb className={styles.scrollThumb} /></ScrollArea.Scrollbar>
+        </ScrollArea.Root>
       </Select.Content>
     </Select.Portal>
   </Select.Root>;
