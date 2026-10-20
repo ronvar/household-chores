@@ -391,7 +391,6 @@ body :is([data-slot=dialog-description],.editor-form label,.editor-form legend,.
 .swipe-hint-complete svg { color: var(--ui-green); }
 .swipe-hint-trade svg { color: var(--ui-blue); }
 body [data-slot=dialog-content].completion-dialog { position: relative; isolation: isolate; width: 100%; max-width: 360px; min-height: 0; height: auto; max-height: calc(100dvh - 40px); overflow: auto; padding: 0; gap: 0; border-radius: 28px; border: 1px solid color-mix(in srgb,var(--ui-card) 70%,var(--ui-line)); background: transparent; color: var(--ui-text); box-shadow: 0 24px 80px #0003,inset 0 1px 0 #ffffff66; }
-.completion-dialog .completion-dialog-glass { position: absolute!important; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: color-mix(in srgb,var(--ui-card) 84%,transparent); }
 .completion-dialog-copy { padding: 28px 24px 24px; text-align: center; }
 .completion-dialog-icon { display: grid; place-items: center; width: 54px; height: 54px; margin: 0 auto 18px; border-radius: 50%; background: color-mix(in srgb,var(--ui-green) 14%,transparent); color: var(--ui-green); }
 .completion-dialog [data-slot=dialog-title] { margin: 0 0 12px; font-size: 20px; line-height: 1.3; font-weight: 700; }
@@ -405,3 +404,14 @@ body [data-slot=dialog-content].completion-dialog { position: relative; isolatio
 .completion-dialog-confirm:disabled svg { animation: spin .8s linear infinite; }
 .completion-dialog-error { color: var(--ui-red); font-size: 14px; line-height: 1.5; margin: 12px 0 0; }
 @media(prefers-reduced-motion:reduce) { .completion-dialog-confirm:disabled svg { animation: none; } }
+body [data-slot=dialog-content].glass-dialog { isolation: isolate; display: grid; grid-template-rows: minmax(0,1fr); gap: 0; padding: 0!important; overflow: hidden; border-radius: 28px; background: transparent; border: 1px solid color-mix(in srgb,var(--ui-card) 70%,var(--ui-line)); box-shadow: 0 24px 80px #0003,inset 0 1px 0 #ffffff66; }
+.glass-dialog .dialog-glass { position: absolute!important; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background: color-mix(in srgb,var(--ui-card) 84%,transparent); }
+.glass-dialog>.dialog-body { position: relative; z-index: 1; display: grid; align-content: start; gap: 16px; padding: 26px; min-height: 0; max-height: inherit; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+.glass-dialog>[data-slot=dialog-close] { z-index: 2; }
+.completion-dialog.glass-dialog>.dialog-body { padding: 0; gap: 0; }
+body [data-slot=dialog-content].confirmation-prompt { max-width: 360px; }
+.confirmation-prompt-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.confirmation-prompt-actions button { min-height: 44px; border: 1px solid var(--ui-line); border-radius: 14px; padding: 10px; background: var(--ui-pill); color: var(--ui-blue); font: inherit; font-size: 15px; font-weight: 600; }
+.confirmation-prompt-actions button:last-child { background: var(--ui-blue); border-color: transparent; color: #fff; }
+.confirmation-prompt-actions button.destructive { background: var(--ui-red); }
+@media(max-width:760px) { .glass-dialog>.dialog-body { padding: 24px 22px; } }

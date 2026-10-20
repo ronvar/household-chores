@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { LoaderCircle, RefreshCw } from "lucide-react";
 import { appVersion } from "@/lib/app-version";
+import useConfirmationPrompt from "./confirmation-prompt";
 
 async function latestVersion() {
   const response = await fetch(`/api/version?check=${Date.now()}`, {
@@ -17,6 +18,7 @@ async function latestVersion() {
 }
 
 export default function AppUpdates({ disabled, hasDraft, automaticBlocked, currentTab }: { disabled: boolean; hasDraft: boolean; automaticBlocked: boolean; currentTab: string }) {
+  const { confirmAction, confirmationPrompt } = useConfirmationPrompt();
   const [availableVersion, setAvailableVersion] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
@@ -69,7 +71,7 @@ export default function AppUpdates({ disabled, hasDraft, automaticBlocked, curre
   const refresh = useCallback(async (automatic = false) => {
     const canAutoRefresh = () => !guards.current.disabled && !guards.current.hasDraft && !guards.current.automaticBlocked && document.visibilityState === "visible" && Date.now() - lastInteraction.current >= 10000 && !document.querySelector('[role="dialog"][data-state="open"]');
     if (guards.current.disabled || refreshInProgress.current || (automatic && !canAutoRefresh())) return;
-    if (!automatic && guards.current.hasDraft && !window.confirm("Refresh the app? Unsaved edits will be discarded.")) return;
+    if (!automatic && guards.current.hasDraft && !await confirmAction({ title: "Refresh the app?", description: "Unsaved edits will be discarded.", action: "Refresh" })) return;
     refreshInProgress.current = true;
     setRefreshing(true);
     setError("");
@@ -101,7 +103,7 @@ export default function AppUpdates({ disabled, hasDraft, automaticBlocked, curre
       refreshInProgress.current = false;
       setRefreshing(false);
     }
-  }, []);
+  }, [confirmAction]);
 
   useEffect(() => {
     if (!availableVersion || disabled || hasDraft || automaticBlocked || refreshing || error) return;
@@ -111,6 +113,7 @@ export default function AppUpdates({ disabled, hasDraft, automaticBlocked, curre
   }, [availableVersion, disabled, hasDraft, automaticBlocked, refreshing, error, refresh]);
 
   return <>
+    {confirmationPrompt}
     <button className={`app-refresh-button ${availableVersion ? "update-ready" : ""}`} onClick={() => refresh()} disabled={disabled || refreshing} aria-label={availableVersion ? "Refresh app to install update" : "Refresh app"} title={availableVersion ? "Update available — refresh app" : "Refresh app"}>
       {refreshing ? <LoaderCircle className="trade-spinner" size={19} /> : <RefreshCw size={19} />}
       {availableVersion && <span className="app-update-dot" />}
