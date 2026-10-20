@@ -34,3 +34,9 @@ Before publishing calendar or chore-row changes:
 - Chore records in Overview, History, Me, and Household use `HouseholdCard` and shared spacing, minimum height, radius, typography, and watermark tokens. Additional record details may increase height; never truncate timestamps or chore names to force a fixed height.
 - Mobile navigation has four evenly spaced items and no detached add button. Household retains Add chore. Check 320px as well as the larger mobile breakpoint.
 - Local follow-up: independent History filters returned all three people, then one correct completer per selection using isolated temporary fixtures. Light and dark layouts in all four tabs had no horizontal overflow at 320, 393, 768, and 1280px. Temporary fixtures were removed afterward; production data was not changed.
+
+## Weekly completion history and Board changes
+
+- Both completion sections default to the current household week. Each picker selects exactly one of five periods: this week or one, two, three, or four weeks ago. Periods use actual completion time, not the chore's original due date, and run Monday 9am Pacific to the next Monday 9am Pacific.
+- Board changes only includes trade requests/responses/cancellations, chore additions/removals, and edits containing an effort-point change. Completion, reopen, profile, preference, people, schedule-only, and automatic allocation messages remain stored but are hidden from this view.
+- Follow-up checks passed: 18 event inclusion/exclusion cases, exact Monday cutoff boundaries, the fall daylight-saving transition, and five disjoint completion weeks. Local browser fixtures verified current, last, and four-weeks-ago results without mixing periods; Overview's picker independently started at This week. Fixtures were removed after checking. Responsive history controls fit at 320, 393, and 1280px.
