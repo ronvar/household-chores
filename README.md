@@ -16,9 +16,9 @@ A responsive chore-management app for a shared household, with recurring assignm
 
 ## Interface
 
-The overview has Simple, People, and Quick Filters layouts. Layout, Calendar/List, person, and appearance choices are remembered on the device. Appearance follows the system unless Light or Dark is selected in Me.
+The overview has Simple, People, and Quick Filters layouts. Simple always uses standalone chore cards, even when the device previously selected Calendar. Calendar/List remains available in People and Quick Filters. Layout, Calendar/List, person, and appearance choices are remembered on the device. Appearance follows the system unless Light or Dark is selected in Me or the header.
 
-Chore cards use relative deadlines and subtle status glows, without point totals. Swipe right to reveal completion or reopening, and left to propose a trade. A full completion swipe still asks for confirmation. Keyboard and screen-reader actions remain available. Pending starts expanded; missed turns and this week's completed record are separate collapsible sections. Older completions remain in History.
+Chore cards use prominent relative deadlines, background chore icons, and subtle status glows, without point totals. Swipe right to reveal completion or reopening, and left to propose a trade. A full completion swipe still asks for confirmation. Keyboard and screen-reader actions remain available. Ready to do starts expanded; upcoming, missed turns, and completed records are separate collapsible sections. Completion history defaults to this week and can show each of the previous four weeks individually.
 
 Effort values still drive fair allocation and remain editable in Household. Trade pickers show the owner, precise deadline, and completion window for each occurrence. The catalog supports search and schedule filters.
 

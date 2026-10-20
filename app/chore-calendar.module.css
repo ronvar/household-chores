@@ -109,7 +109,7 @@
 .groupBadge { flex: none; font-size: 11px; color: var(--ui-secondary, #777780); background: var(--ui-pill, #f1f1f5); padding: 5px 8px; border-radius: 20px; white-space: nowrap; line-height: 1.2; }
 .groupBadge.todayBadge { color: #087cff; background: color-mix(in srgb, var(--ui-blue, #087cff) 12%, var(--ui-card, #fff)); }
 .mobileTask { margin: 0; }
-.mobileTask + .mobileTask { border-top: 1px solid var(--calendar-line); }
+.mobileTask + .mobileTask { border-top: 0; }
 .miniWindow { padding: 2px 18px 18px; }
 .miniDays { --track-inset: 14px; position: relative; display: flex; justify-content: space-between; padding-inline: var(--track-inset); min-width: 0; }
 .miniDays::before { content: ""; position: absolute; top: 24px; left: var(--track-inset); right: var(--track-inset); height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--ui-blue, #087cff) 25%, var(--ui-card, #fff)); }
