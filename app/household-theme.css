@@ -136,7 +136,7 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .cancel-slot { height: 26px; position: relative; z-index: 1; }
 .household-ui .cancel-complete, .household-ui .confirming-row .cancel-complete { width: 26px!important; height: 26px; }
 .household-ui .cancel-complete svg { width: 16px; height: 16px; }
-.chore-watermark { position: absolute; right: 24px; top: 50%; transform: translateY(-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
+.chore-watermark { position: absolute; left: 60%; right: auto; top: 50%; transform: translate(-50%,-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
 .household-ui .board-section .chore-watermark { display: block; }
 .household-ui .board-section .task-list .task-row.swipe-task-row { grid-template-columns: minmax(0,1fr); }
 .household-ui .board-section .task-list .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }
@@ -278,7 +278,7 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
   .household-ui .layout { display: block; padding: 16px 20px 0; }.household-ui .main-area { padding: 0 0 calc(112px + env(safe-area-inset-bottom)); }.household-ui .sidebar { display: none; }
   .household-ui .overview-mode { margin-bottom: 15px; }.household-ui .board-section { margin-top: 22px; }.household-ui .board-line { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }.household-ui .chore-board-title h1 { font-size: 21px; }
   .household-ui .board-tools { display: flex; flex-wrap: nowrap; justify-content: space-between; }.household-ui .board-actions { margin-left: auto; gap: 6px; }.household-ui .chore-view-switch button { min-width: 78px; }
-  .household-ui .task-row.swipe-task-row,.household-ui .task-row.swipe-task-row.overdue-row { padding: 18px; min-height: 96px; grid-template-columns: 26px 0 minmax(0,1fr); }.household-ui .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }.household-ui .task-main { padding-right: 14px; }.chore-watermark { width: 120px; height: 120px; right: 20px; }
+  .household-ui .task-row.swipe-task-row,.household-ui .task-row.swipe-task-row.overdue-row { padding: 18px; min-height: 96px; grid-template-columns: 26px 0 minmax(0,1fr); }.household-ui .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }.household-ui .task-main { padding-right: 14px; }.chore-watermark { width: 120px; height: 120px; }
   .household-ui .board-section.calendar-board .task-row.swipe-task-row { padding: 18px; min-height: 96px; }
   .household-ui .task-main strong, .household-ui .board-section.calendar-board .task-main strong, .household-ui .completion-entry-copy strong { font-size: 15px; }
   .household-ui .task-main>span, .household-ui .board-section.calendar-board .task-main>span, .household-ui .completion-entry-copy>span, .household-ui .completion-entry-copy time { font-size: 13px; }
