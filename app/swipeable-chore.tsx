@@ -70,7 +70,7 @@ export default function SwipeableChore({ children, title, canComplete, canTrade,
       suppressClick.current = true;
     }
     const requested = current.start + deltaX;
-    const next = Math.max(canTrade ? -current.width : 0, Math.min(canComplete ? current.width : 0, requested));
+    const next = Math.max(canComplete ? -current.width : 0, Math.min(canTrade ? current.width : 0, requested));
     current.offset = next;
     setOffset(next);
     setArmed(Math.abs(next) >= Math.max(140, current.width * .58));
@@ -86,28 +86,28 @@ export default function SwipeableChore({ children, title, canComplete, canTrade,
     if (cancelled || current.axis !== "x") { setOffset(0); return; }
     if (Math.abs(current.offset) >= Math.max(140, current.width * .58)) {
       setOffset(0);
-      if (current.offset > 0 && canComplete) onComplete();
-      else if (current.offset < 0 && canTrade) onTrade();
+      if (current.offset < 0 && canComplete) onComplete();
+      else if (current.offset > 0 && canTrade) onTrade();
     } else setOffset(Math.abs(current.offset) > 36 ? Math.sign(current.offset) * actionWidth : 0);
   }
 
-  return <div ref={root} className={`${styles.root} ${dragging ? styles.dragging : ""} ${armed ? styles.armed : ""}`} data-swipe-chore="" data-swipe-open={offset > 0 ? "complete" : offset < 0 ? "trade" : undefined}>
-    {canComplete && <button type="button" className={`${styles.action} ${styles.complete}`} style={{ width: Math.max(actionWidth, offset) }} tabIndex={enabled && offset > 0 ? 0 : -1} aria-hidden={!enabled || offset <= 0} disabled={!enabled || offset <= 0} aria-label={`${completed ? "Reopen" : "Complete"} ${title}`} onClick={() => { close(); onComplete(); }}>{completed ? <RotateCcw size={24} /> : <Check size={25} />}<span>{completed ? "Reopen" : "Complete"}</span></button>}
-    {canTrade && <button type="button" className={`${styles.action} ${styles.trade}`} style={{ width: Math.max(actionWidth, -offset) }} tabIndex={enabled && offset < 0 ? 0 : -1} aria-hidden={!enabled || offset >= 0} disabled={!enabled || offset >= 0} aria-label={`Trade ${title}`} onClick={() => { close(); onTrade(); }}><ArrowLeftRight size={23} /><span>Trade</span></button>}
+  return <div ref={root} className={`${styles.root} ${dragging ? styles.dragging : ""} ${armed ? styles.armed : ""}`} data-swipe-chore="" data-swipe-open={offset < 0 ? "complete" : offset > 0 ? "trade" : undefined}>
+    {canComplete && <button type="button" className={`${styles.action} ${styles.complete}`} style={{ width: Math.max(actionWidth, -offset) }} tabIndex={enabled && offset < 0 ? 0 : -1} aria-hidden={!enabled || offset >= 0} disabled={!enabled || offset >= 0} aria-label={`${completed ? "Reopen" : "Complete"} ${title}`} onClick={() => { close(); onComplete(); }}>{completed ? <RotateCcw size={24} /> : <Check size={25} />}<span>{completed ? "Reopen" : "Complete"}</span></button>}
+    {canTrade && <button type="button" className={`${styles.action} ${styles.trade}`} style={{ width: Math.max(actionWidth, offset) }} tabIndex={enabled && offset > 0 ? 0 : -1} aria-hidden={!enabled || offset <= 0} disabled={!enabled || offset <= 0} aria-label={`Trade ${title}`} onClick={() => { close(); onTrade(); }}><ArrowLeftRight size={23} /><span>Trade</span></button>}
     <div className={styles.surface} style={{ "--swipe-offset": `${offset}px` } as CSSProperties} tabIndex={enabled ? 0 : undefined} role={enabled ? "group" : undefined} aria-label={enabled ? `${title} actions` : undefined} aria-describedby={enabled ? helpId : undefined} onPointerDown={start} onPointerMove={move} onPointerUp={(event) => finish(event)} onPointerCancel={(event) => finish(event, true)} onLostPointerCapture={() => { if (gesture.current) close(); }} onClickCapture={(event) => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }} onKeyDown={(event) => {
       if (event.target !== event.currentTarget || !enabled) return;
-      if (event.key === "ArrowRight" && canComplete) { event.preventDefault(); setOffset(actionWidth); }
-      if (event.key === "ArrowLeft" && canTrade) { event.preventDefault(); setOffset(-actionWidth); }
+      if (event.key === "ArrowLeft" && canComplete) { event.preventDefault(); setOffset(-actionWidth); }
+      if (event.key === "ArrowRight" && canTrade) { event.preventDefault(); setOffset(actionWidth); }
       if (event.key === "Escape") close();
       if (event.key === "Enter" && offset !== 0) {
         event.preventDefault();
         close();
-        if (offset > 0 && canComplete) onComplete();
-        else if (offset < 0 && canTrade) onTrade();
+        if (offset < 0 && canComplete) onComplete();
+        else if (offset > 0 && canTrade) onTrade();
       }
     }}>
       {children}
-      {enabled && <span id={helpId} className={styles.srOnly}>{canComplete ? `Swipe right or press right arrow, then Enter to ${completed ? "reopen" : "complete"}. ` : ""}{canTrade ? "Swipe left or press left arrow, then Enter to trade." : ""}</span>}
+      {enabled && <span id={helpId} className={styles.srOnly}>{canComplete ? `Swipe left or press left arrow, then Enter to ${completed ? "reopen" : "complete"}. ` : ""}{canTrade ? "Swipe right or press right arrow, then Enter to trade." : ""}</span>}
       {enabled && <span className={styles.accessibleActions}>{canComplete && <button type="button" onClick={onComplete}>{completed ? "Reopen" : "Complete"} {title}</button>}{canTrade && <button type="button" onClick={onTrade}>Trade {title}</button>}</span>}
     </div>
   </div>;
