@@ -46,3 +46,8 @@ Before publishing calendar or chore-row changes:
 - History and Overview completion records share `CompletedChoreCard`: larger profile image and title/name text, with right-aligned status and local timestamp badges. Dates are MM/DD/YY; the timezone abbreviation is omitted from the visible time.
 - Lateness is measured against the original household deadline in Pacific time: On time through the deadline day, Late for one through six days, then whole weeks late. Device-local date/time presentation must not change the deadline calculation.
 - Local checks passed for on-time, late, one/two weeks late, Pacific midnight, and daylight-saving boundaries. Both themes were inspected. At 320, 393, and 1280px, avatars measured 44/48px, text did not overlap badges, and there was no horizontal overflow. Temporary completion fixtures were restored afterward.
+
+## Header appearance toggle
+
+- The header's sun/moon button explicitly selects Light or Dark and shares the device-persisted setting with Me. Automatic remains available in Me; its resolved mode determines the header button's next action.
+- Verified both toggle directions, Light persistence after reload, and matching Me selection. At 320, 393, 768, and 1280px the header controls remained separate from the brand without horizontal overflow.

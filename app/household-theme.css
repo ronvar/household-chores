@@ -69,6 +69,9 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .brand-period { color: var(--ui-text); }
 .household-ui .identity-switch, .household-ui .profile-choose { display: flex; align-items: center; gap: 8px; min-height: 36px; background: var(--ui-pill); color: var(--ui-text); border: 1px solid var(--ui-line); border-radius: 100px; padding: 5px 13px; font-size: 12px; }
 .household-ui .app-refresh-button { width: 36px; height: 36px; border-radius: 50%; background: var(--ui-pill); color: var(--ui-text); }
+.household-ui .header-theme-toggle { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border: 1px solid var(--ui-line); border-radius: 50%; padding: 0; background: var(--ui-pill); color: var(--ui-text); transition: background .2s ease,color .2s ease; }
+.household-ui .header-theme-toggle svg { display: block; }
+.household-ui .identity-switch>span:not(.avatar) { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .household-ui .layout { display: grid; grid-template-columns: 190px minmax(0,1fr); max-width: 1440px; margin: 0 auto; padding: 32px 40px 0; gap: 44px; }
 .household-ui .sidebar { top: 114px; color: var(--ui-secondary); background: var(--ui-canvas); border-color: var(--ui-line); }
 .household-ui .nav-item { color: var(--ui-secondary); border-radius: 16px; }
@@ -295,6 +298,8 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 }
 @media(max-width:360px) { .household-ui .layout { padding-inline: 14px; }.household-ui .topbar-inner { padding-inline: 14px; }.household-ui .brand { font-size: 24px; }.household-ui .identity-switch { padding-inline: 10px; }.household-ui .mobile-nav { left: 10px!important; right: 10px!important; }.household-ui .mobile-nav button>span { font-size: 8px; }.quick-filters>button { padding: 10px; }.quick-filters small { display: none; } }
 @media(max-width:360px) {
+  .household-ui .topbar-controls { gap: 4px; }
+  .household-ui .identity-switch>span:not(.avatar) { max-width: 56px; }
   .household-ui .completion-card { grid-template-columns: 44px minmax(0,1fr) auto; gap: 9px; }
   .household-ui .completion-card .history-avatar, .household-ui .completion-card .history-avatar .avatar { width: 44px; height: 44px; }
   .household-ui .household-card.completion-card .record-copy>strong { font-size: 16px; }

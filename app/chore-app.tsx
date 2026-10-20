@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Glass } from "@samasante/liquid-glass";
-import { ArrowLeftRight, ArrowUpDown, CalendarDays, Camera, Check, ChevronDown, ChevronRight, Clock3, Heart, History, House, LayoutGrid, List, ListFilter, LoaderCircle, Plus, RefreshCw, Sparkles, UserRound, X } from "lucide-react";
+import { ArrowLeftRight, ArrowUpDown, CalendarDays, Camera, Check, ChevronDown, ChevronRight, Clock3, Heart, History, House, LayoutGrid, List, ListFilter, LoaderCircle, Moon, Plus, RefreshCw, Sparkles, Sun, UserRound, X } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -89,6 +89,7 @@ export default function ChoreApp() {
   const [overviewMode, setOverviewMode] = useState<"simple" | "people" | "filters">("simple");
   const [urgencyFilter, setUrgencyFilter] = useState<"all" | "due" | "overdue">("all");
   const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
   const [catalogSearch, setCatalogSearch] = useState("");
   const [catalogFrequency, setCatalogFrequency] = useState("all");
   const [historyMode, setHistoryMode] = useState<"completed" | "changes">("completed");
@@ -152,7 +153,11 @@ export default function ChoreApp() {
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-color-scheme: dark)");
-    const update = () => { document.documentElement.dataset.householdTheme = theme === "system" ? query.matches ? "dark" : "light" : theme; };
+    const update = () => {
+      const selectedTheme = theme === "system" ? query.matches ? "dark" : "light" : theme;
+      document.documentElement.dataset.householdTheme = selectedTheme;
+      setResolvedTheme(selectedTheme);
+    };
     update();
     window.localStorage.setItem("household.theme", theme);
     query.addEventListener("change", update);
@@ -459,7 +464,7 @@ export default function ChoreApp() {
   }
 
   return <div className="site-shell household-ui">
-    <header className="topbar"><Glass className="mobile-topbar-glass" aria-hidden="true" radius={0} optics={{ frost: 2, saturate: 1.12, brightness: 0, strength: 0.025, depth: 0.4, curvature: 0.16, dispersion: 0.18, bend: 0.28, bendWidth: 0.14, splay: 0, specular: 1.1, sheen: 0.38, sheenWidth: 4, sheenFalloff: 1.5, glow: 0.14, glowSpread: 1, glowFalloff: 0.5 }}><span className="glass-surface-fill" /></Glass><div className="topbar-inner"><div className="brand"><span>household<span className="brand-period">.</span></span></div><div className="topbar-controls"><AppUpdates currentTab={tab} automaticBlocked={!data || devicePersonId == null || showPersonPicker || !!confirmingAssignmentId || !!tradeConfirmation || !!reassignDraft} disabled={busy} hasDraft={!!assignmentDraft || !!choreDraft || !!personDraft || !!tradeDraft || !!newPreference || Object.entries(preferenceEdits).some(([choreId, strength]) => data?.preferences.find((preference) => preference.person_id === devicePersonId && preference.chore_id === Number(choreId))?.strength !== strength)} />{currentPerson ? <button className="identity-switch" onClick={() => setShowPersonPicker(true)}><PersonAvatar person={currentPerson} index={currentPersonIndex} className="small" /><span>{currentPerson.name}</span><ChevronRight size={15} /></button> : <button className="profile-choose" onClick={() => setShowPersonPicker(true)}>Choose person</button>}</div></div></header>
+    <header className="topbar"><Glass className="mobile-topbar-glass" aria-hidden="true" radius={0} optics={{ frost: 2, saturate: 1.12, brightness: 0, strength: 0.025, depth: 0.4, curvature: 0.16, dispersion: 0.18, bend: 0.28, bendWidth: 0.14, splay: 0, specular: 1.1, sheen: 0.38, sheenWidth: 4, sheenFalloff: 1.5, glow: 0.14, glowSpread: 1, glowFalloff: 0.5 }}><span className="glass-surface-fill" /></Glass><div className="topbar-inner"><div className="brand"><span>household<span className="brand-period">.</span></span></div><div className="topbar-controls"><button type="button" className="header-theme-toggle" aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} title={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>{resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}</button><AppUpdates currentTab={tab} automaticBlocked={!data || devicePersonId == null || showPersonPicker || !!confirmingAssignmentId || !!tradeConfirmation || !!reassignDraft} disabled={busy} hasDraft={!!assignmentDraft || !!choreDraft || !!personDraft || !!tradeDraft || !!newPreference || Object.entries(preferenceEdits).some(([choreId, strength]) => data?.preferences.find((preference) => preference.person_id === devicePersonId && preference.chore_id === Number(choreId))?.strength !== strength)} />{currentPerson ? <button className="identity-switch" onClick={() => setShowPersonPicker(true)}><PersonAvatar person={currentPerson} index={currentPersonIndex} className="small" /><span>{currentPerson.name}</span><ChevronRight size={15} /></button> : <button className="profile-choose" onClick={() => setShowPersonPicker(true)}>Choose person</button>}</div></div></header>
     <main className="layout">
       <aside className="sidebar"><div className="side-caption">YOUR SPACE</div><nav className="nav-list" aria-label="Main navigation"><button className={tab === "board" ? "nav-item active" : "nav-item"} onClick={() => navigate("board")}><LayoutGrid size={18} /> Overview{actionableTradeCount > 0 && <span className="nav-action-badge">{actionableTradeCount}</span>}</button><button className={tab === "history" ? "nav-item active" : "nav-item"} onClick={() => navigate("history")}><History size={18} /> History</button><button className={tab === "me" ? "nav-item active" : "nav-item"} onClick={() => navigate("me")}><UserRound size={18} /> Me</button><button className={tab === "manage" ? "nav-item active" : "nav-item"} onClick={() => navigate("manage")}><House size={18} /> Household</button></nav><div className="sidebar-note"><span className="note-icon"><Sparkles size={17} /></span><p>Good things happen when everyone lends a hand.</p></div></aside>
       <div className={`main-area ${tab === "manage" ? "managing" : ""}`}>
