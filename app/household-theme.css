@@ -17,8 +17,8 @@
   --ui-card-radius: 18px;
   --ui-card-padding: 20px;
   --ui-card-min-height: 88px;
-  --ui-card-title-size: 14px;
-  --ui-card-detail-size: 12px;
+  --ui-card-title-size: 17px;
+  --ui-card-detail-size: 15px;
   --background: var(--ui-canvas);
   --foreground: var(--ui-text);
   --border: var(--ui-line);
@@ -237,8 +237,8 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 .household-ui .household-card :is(.record-copy,.task-main,.manage-task,.preference-chore)>:is(span,time), .household-ui .household-card.personal-trade div>span { font-size: var(--ui-card-detail-size); line-height: 1.5; color: var(--ui-secondary); }
 .household-ui .household-card.swipe-task-row { border: 0; border-radius: 0; }
 .household-ui .board-section .household-card.swipe-task-row { min-height: 96px; }
-.household-ui .board-section .household-card .task-main>strong { font-size: 17px; }
-.household-ui .board-section .household-card .task-main>span { font-size: 15px; }
+.household-ui .board-section .household-card .task-main>strong { font-size: var(--ui-card-title-size); }
+.household-ui .board-section .household-card .task-main>span { font-size: var(--ui-card-detail-size); }
 .household-ui .history-card-list, .household-ui .personal-trades, .household-ui .preference-list { display: grid; gap: 10px; }
 .history-person-filter { width: min(100%,320px); margin-bottom: 14px; }
 .history-filter-label { display: block; margin-bottom: 7px; color: var(--ui-secondary); font-size: 12px; font-weight: 600; }
@@ -273,7 +273,7 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 @media(min-width:1100px) { .household-ui .me-view { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }.me-view>.page-heading,.me-view>.appearance-card,.me-view>.me-sections { grid-column: 1/-1; }.household-ui .me-view .profile-card,.household-ui .me-view .score-card { margin: 0; padding: 22px; }.household-ui .me-view .score-ring { width: 100px; height: 100px; padding: 8px; flex: none; }.household-ui .me-view .score-card h2 { font-size: 17px; }.household-ui .me-view .profile-card { flex-direction: column; align-items: flex-start; }.household-ui .me-view .profile-avatar { width: 52px; height: 52px; } }
 @media(min-width:761px) and (max-width:1099px) { .household-ui .layout { grid-template-columns: 160px minmax(0,1fr); padding: 24px 24px 0; gap: 24px; } }
 @media(max-width:760px) {
-  .household-ui { --ui-card-padding: 18px; --ui-card-min-height: 96px; --ui-card-title-size: 15px; --ui-card-detail-size: 13px; }
+  .household-ui { --ui-card-padding: 18px; --ui-card-min-height: 96px; }
   .history-person-filter { width: 100%; }
   .household-ui .topbar,.household-ui .topbar-inner { height: 70px; }.household-ui .topbar-inner { padding: 0 20px; }.household-ui .brand { font-size: 27px; }.household-ui .identity-switch { display: flex; }.household-ui .identity-switch .avatar { display: none; }.household-ui .identity-switch svg { display: none; }
   .household-ui .layout { display: block; padding: 16px 20px 0; }.household-ui .main-area { padding: 0 0 calc(112px + env(safe-area-inset-bottom)); }.household-ui .sidebar { display: none; }
