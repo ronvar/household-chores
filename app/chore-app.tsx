@@ -61,10 +61,6 @@ function fullDate(date: string) {
   return new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" });
 }
 
-function windowDate(date: string) {
-  return new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: "long" });
-}
-
 function addDays(date: string, days: number) {
   const value = new Date(`${date}T12:00:00Z`);
   value.setUTCDate(value.getUTCDate() + days);
@@ -409,7 +405,7 @@ export default function ChoreApp() {
           </button>
           <span className="cancel-slot"><button className="cancel-complete" aria-label={`Cancel completing ${item.title_snapshot}`} onClick={() => setConfirmingAssignmentId(null)} disabled={!confirming || busy}><X size={17} /></button></span>
           <div className="task-main"><strong>{item.title_snapshot}</strong><span>{confirming ? "Confirm completed?" : <>{item.person_name} <span className="dot-separator">·</span> <span className={`task-due-copy ${dueTone}`}>{dueText}</span></>}</span>
-            {item.completed_at ? <span className="task-window">Original deadline {fullDate(item.due_date)}</span> : item.repeated && item.available_date ? <span className="task-window">{overdue ? `Missed window: ${windowDate(item.available_date)} to ${windowDate(item.due_date)}` : item.available_date === item.due_date ? `Complete on ${windowDate(item.due_date)}` : `Complete between ${windowDate(item.available_date)} and ${windowDate(item.due_date)}`}</span> : null}
+            {item.completed_at && <span className="task-window">Original deadline {fullDate(item.due_date)}</span>}
             {missed && item.repeated && <span className="task-schedule-note">Missed turn · assigned to you again next week</span>}
             {item.earlier_schedule && <span className="task-schedule-note">Original schedule · deadline unchanged</span>}
           </div>
