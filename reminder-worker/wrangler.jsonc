@@ -1,0 +1,15 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "household-chore-reminders",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": { "HOUSEHOLD_SITE_URL": "https://your-household.example" },
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "triggers": { "crons": ["0 * * * *"] },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "household-chore-reminders", "database_id": "00000000-0000-4000-8000-000000000000" }
+  ]
+}

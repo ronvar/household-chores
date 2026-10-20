@@ -1,0 +1,1 @@
+ALTER TABLE `assignments` ADD `superseded_by_assignment_id` integer;
