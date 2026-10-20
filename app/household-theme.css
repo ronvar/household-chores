@@ -19,6 +19,8 @@
   --ui-card-min-height: 88px;
   --ui-card-title-size: 17px;
   --ui-card-detail-size: 15px;
+  --ui-body-size: 15px;
+  --ui-label-size: 14px;
   --background: var(--ui-canvas);
   --foreground: var(--ui-text);
   --border: var(--ui-line);
@@ -342,4 +344,39 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
   .household-ui .me-view .score-card .section-kicker { font-size: 9px; }
   .household-ui .me-view>.page-heading { margin-bottom: 6px; }
   .household-ui .me-view>.appearance-card,.household-ui .me-view>.me-sections { margin-top: 4px; }
+}
+.household-ui :is(.page-heading p,.me-section-copy,.empty-note,.manage-head p,.approval-section p,.notification-note,.notification-note p,.profile-actions button,.profile-upload,.preference-toolbar button,.preference-actions button,.appearance-switch button,.scope-switch button,.history-switch button,.overview-mode button,.catalog-tools input,.catalog-filters button,.manage-row>button,.manage-head button,.notification-actions button,.notification-summary,.completion-show-more) { font-size: var(--ui-body-size); line-height: 1.5; }
+.household-ui :is(.pill-action,.chore-view-switch button,.swipe-instructions,.side-caption,.sidebar-note,.section-kicker,.trade-status,.history-timing-badge,.history-time-badge) { font-size: var(--ui-label-size); line-height: 1.4; }
+.household-ui .nav-item { font-size: var(--ui-card-title-size); }
+.household-ui .me-view .profile-actions button,.household-ui .me-view .profile-upload { font-size: var(--ui-body-size); padding: 8px 12px; }
+.household-ui .me-view .profile-upload svg { width: 16px; height: 16px; flex: none; }
+.household-ui .me-view .score-card h2 { font-size: var(--ui-card-title-size); line-height: 1.5; }
+.household-ui .me-view .score-card p { font-size: var(--ui-body-size); line-height: 1.5; }
+.household-ui .me-view .score-card .section-kicker { font-size: var(--ui-label-size); }
+.household-ui .appearance-card h2 { font-size: var(--ui-card-title-size); }
+.household-ui .preference-row [data-household-select] { font-size: var(--ui-body-size); }
+.household-ui .quick-filters strong,.household-ui .person-card strong { font-size: var(--ui-card-title-size); overflow-wrap: anywhere; }
+.household-ui .quick-filters small,.household-ui .quick-filters b,.household-ui .person-card>span,.household-summary>span:last-child { font-size: var(--ui-label-size); }
+.household-ui .overview-trades .trade-chore-copy strong { font-size: var(--ui-card-title-size); }
+body :is([data-slot=dialog-description],.editor-form label,.editor-form legend,.editor-dialog .form-actions>[data-slot=button]) { font-size: var(--ui-body-size); line-height: 1.5; }
+@media(max-width:760px) {
+  .household-ui .mobile-nav button { min-height: 62px; gap: 5px; }
+  .household-ui .mobile-nav button>span:not(.nav-avatar):not(.mobile-action-badge) { font-size: var(--ui-body-size); line-height: 1.25; font-weight: 600; }
+  .household-ui .me-view .profile-card { min-width: 0; }
+  .household-ui .me-view .profile-actions { max-width: 100%; }
+  .household-ui .me-view .profile-upload { max-width: 100%; }
+}
+@media(max-width:480px) {
+  .household-ui .me-view { grid-template-columns: minmax(0,1fr); }
+  .household-ui .me-view .profile-card { flex-direction: row; align-items: center; }
+  .household-ui .me-view .profile-avatar { width: 48px; height: 48px; flex: none; }
+  .household-ui .me-view .profile-copy { min-width: 0; }
+  .household-ui .me-view .profile-actions { flex-direction: row; flex-wrap: wrap; }
+  .household-ui .me-view .score-card { flex-direction: row; text-align: left; }
+  .household-ui .me-view .score-ring { width: 88px; height: 88px; flex: none; }
+}
+@media(max-width:360px) {
+  .household-ui .mobile-nav { left: 8px!important; right: 8px!important; padding: 4px; gap: 0; }
+  .household-ui .mobile-nav button>span:not(.nav-avatar):not(.mobile-action-badge) { font-size: var(--ui-label-size); }
+  .household-ui :is(.overview-mode,.history-switch) button { padding-inline: 6px; font-size: var(--ui-label-size); }
 }
