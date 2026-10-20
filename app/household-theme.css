@@ -4,7 +4,7 @@
   --ui-glass: rgba(255,255,255,.78);
   --ui-dock: rgba(255,255,255,.7);
   --ui-pill: rgba(118,118,128,.12);
-  --ui-line: rgba(60,60,67,.11);
+  --ui-line: rgba(74,96,128,.22);
   --ui-text: #111113;
   --ui-secondary: #6e6e73;
   --ui-muted: #8e8e93;
@@ -110,20 +110,22 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .task-panel.sorted-panel { padding: 0; border: 0; border-radius: 0; background: transparent; overflow: visible; }
 .household-ui .task-list { display: grid; gap: 10px; }
 .household-ui [data-swipe-chore] { border: 1px solid var(--ui-line)!important; border-radius: 18px; background: var(--ui-card); }
-.household-ui .task-row.swipe-task-row { position: relative; isolation: isolate; min-height: 88px; padding: 18px 20px; background: var(--ui-card); color: var(--ui-text); grid-template-columns: 26px 0 minmax(0,1fr); column-gap: 12px; border-radius: 0; }
-.household-ui .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }
+.household-ui .task-row.swipe-task-row { position: relative; isolation: isolate; min-height: 88px; padding: 18px 26px; background: var(--ui-card); color: var(--ui-text); grid-template-columns: minmax(0,1fr) 110px; column-gap: 16px; border-radius: 0; }
+.household-ui .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr) 110px; }
 .household-ui .task-row.swipe-task-row.deadline-urgent { box-shadow: inset 0 0 24px var(--ui-inset-red); }
 .household-ui .task-row.swipe-task-row.deadline-soon { box-shadow: inset 0 0 24px var(--ui-inset-amber); }
 .household-ui .task-row.swipe-task-row.deadline-waiting { box-shadow: none; }
-.household-ui .task-main { position: relative; z-index: 1; margin-left: 0; padding-right: 25px; }
+.household-ui .task-main { position: relative; z-index: 1; margin-left: 0; padding-right: 0; }
 .household-ui .confirming-row .task-main { margin-left: 0; }
 .household-ui .task-main strong { font-size: 14px; line-height: 1.4; font-weight: 650; color: var(--ui-text); }
 .household-ui .task-main>span { font-size: 12px; line-height: 1.5; margin-top: 4px; color: var(--ui-secondary); }
 .household-ui .task-main .task-window, .household-ui .task-main .task-schedule-note { font-size: 11px; color: var(--ui-muted); font-weight: 400; }
-.household-ui .task-main .task-due-copy.urgent { color: var(--ui-red); }
-.household-ui .task-main .task-due-copy.soon { color: var(--ui-orange); }
-.household-ui .task-main .task-due-copy.later { color: var(--ui-secondary); }
-.household-ui .task-main .task-due-copy.waiting { color: var(--ui-muted); }
+.household-ui .task-due-label { align-self: center; text-align: center; font-size: 18px; font-weight: 650; line-height: 1.35; overflow-wrap: normal; color: var(--ui-secondary); }
+.household-ui .task-due-label.urgent { color: var(--ui-red); }
+.household-ui .task-due-label.soon { color: var(--ui-orange); }
+.household-ui .task-due-label.waiting { color: var(--ui-muted); }
+:root:not([data-household-theme=dark]) .household-ui [data-swipe-chore]:has(.deadline-urgent) { border-color: rgba(211,48,50,.3)!important; }
+:root:not([data-household-theme=dark]) .household-ui [data-swipe-chore]:has(.deadline-soon) { border-color: rgba(169,101,5,.3)!important; }
 .household-ui .task-check { position: relative; z-index: 1; width: 26px; height: 26px; min-width: 26px; display: grid; place-items: center; border: 1.5px solid var(--ui-muted); background: transparent; color: var(--ui-text); border-radius: 50%; padding: 0; }
 .household-ui .task-check:not(:hover):not(.checked):not(.confirming) { border-color: var(--ui-muted); }
 .household-ui .task-check .task-emoji { display: none; }
@@ -138,8 +140,8 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .cancel-complete svg { width: 16px; height: 16px; }
 .chore-watermark { position: absolute; left: 60%; right: auto; top: 50%; transform: translate(-50%,-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
 .household-ui .board-section .chore-watermark { display: block; }
-.household-ui .board-section .task-list .task-row.swipe-task-row { grid-template-columns: minmax(0,1fr); }
-.household-ui .board-section .task-list .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }
+.household-ui .board-section .task-list .task-row.swipe-task-row { grid-template-columns: minmax(0,1fr) 110px; }
+.household-ui .board-section .task-list .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr) 110px; }
 .household-ui .upcoming-stack, .household-ui .missed-stack, .household-ui .completion-history { margin-top: 18px; border-top: 1px solid var(--ui-line); }
 .household-ui .missed-stack .task-list { padding-bottom: 12px; }
 .household-ui .me-section-copy { padding: 0 0 16px; color: var(--ui-secondary); font-size: 12px; border: 0; }
@@ -236,7 +238,6 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 .household-ui .board-section .household-card.swipe-task-row { min-height: 96px; }
 .household-ui .board-section .household-card .task-main>strong { font-size: 17px; }
 .household-ui .board-section .household-card .task-main>span { font-size: 15px; }
-.household-ui .board-section .household-card .task-main .task-due-copy { font-size: 15px; font-weight: 600; }
 .household-ui .history-card-list, .household-ui .personal-trades, .household-ui .preference-list { display: grid; gap: 10px; }
 .history-person-filter { width: min(100%,320px); margin-bottom: 14px; }
 .history-filter-label { display: block; margin-bottom: 7px; color: var(--ui-secondary); font-size: 12px; font-weight: 600; }
@@ -277,8 +278,15 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
   .household-ui .layout { display: block; padding: 16px 20px 0; }.household-ui .main-area { padding: 0 0 calc(112px + env(safe-area-inset-bottom)); }.household-ui .sidebar { display: none; }
   .household-ui .overview-mode { margin-bottom: 15px; }.household-ui .board-section { margin-top: 22px; }.household-ui .board-line { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }.household-ui .chore-board-title h1 { font-size: 21px; }
   .household-ui .board-tools { display: flex; flex-wrap: nowrap; justify-content: space-between; }.household-ui .board-actions { margin-left: auto; gap: 6px; }.household-ui .chore-view-switch button { min-width: 78px; }
-  .household-ui .task-row.swipe-task-row,.household-ui .task-row.swipe-task-row.overdue-row { padding: 18px; min-height: 96px; grid-template-columns: 26px 0 minmax(0,1fr); }.household-ui .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr); }.household-ui .task-main { padding-right: 14px; }.chore-watermark { width: 120px; height: 120px; }
-  .household-ui .board-section.calendar-board .task-row.swipe-task-row { padding: 18px; min-height: 96px; }
+  .household-ui .task-row.swipe-task-row,.household-ui .task-row.swipe-task-row.overdue-row { padding: 18px 24px; min-height: 96px; }.chore-watermark { width: 120px; height: 120px; }
+  .household-ui .board-section.calendar-board .task-row.swipe-task-row { padding: 18px 24px; min-height: 96px; }
+  .household-ui .board-section .task-list .task-row.swipe-task-row { grid-template-columns: minmax(0,1fr) 90px; column-gap: 12px; }
+  .household-ui .board-section .task-list .task-row.swipe-task-row.confirming-row { grid-template-columns: 26px 26px minmax(0,1fr) 90px; }
+  .household-ui .board-section .task-list .confirming-row .task-main { grid-column: 1 / 4; grid-row: 1; }
+  .household-ui .board-section .task-list .confirming-row .task-check { grid-column: 1; grid-row: 2; margin-top: 10px; }
+  .household-ui .board-section .task-list .confirming-row .cancel-slot { grid-column: 2; grid-row: 2; margin-top: 10px; }
+  .household-ui .board-section .task-list .confirming-row .task-due-label { grid-column: 4; grid-row: 1 / 3; }
+  .household-ui .task-due-label { font-size: 16px; }
   .household-ui .task-main strong, .household-ui .board-section.calendar-board .task-main strong, .household-ui .completion-entry-copy strong { font-size: 15px; }
   .household-ui .task-main>span, .household-ui .board-section.calendar-board .task-main>span, .household-ui .completion-entry-copy>span, .household-ui .completion-entry-copy time { font-size: 13px; }
   .household-ui .completion-entry { padding: 18px; }
