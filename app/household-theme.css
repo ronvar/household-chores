@@ -92,7 +92,7 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .board-icon-button { height: 34px; width: 34px; background: var(--ui-pill); color: var(--ui-text); border: 0; box-shadow: none; }
 .household-ui .live-status, .household-ui .board-actions>.text-action { display: none; }
 .household-ui .pill-action { display: inline-flex; align-items: center; justify-content: center; gap: 5px; background: var(--ui-pill); color: var(--ui-blue); border: 0; border-radius: 100px; padding: 7px 12px; font-size: 12px; font-weight: 650; white-space: nowrap; }
-.household-ui .pending-stack, .household-ui .completion-history, .household-ui .missed-stack { background: transparent; border: 0; border-radius: 0; box-shadow: none; overflow: visible; }
+.household-ui .pending-stack, .household-ui .upcoming-stack, .household-ui .completion-history, .household-ui .missed-stack { background: transparent; border: 0; border-radius: 0; box-shadow: none; overflow: visible; }
 .household-ui .me-section summary { min-height: 60px; padding: 14px 0; color: var(--ui-text); border: 0; }
 .household-ui .me-section summary>span { gap: 8px; font-size: 17px; letter-spacing: -.3px; }
 .household-ui .me-section summary>svg { width: 27px; height: 27px; padding: 6px; background: var(--ui-pill); border-radius: 50%; color: var(--ui-secondary); }
@@ -130,7 +130,7 @@ body { background: var(--ui-canvas); color: var(--ui-text); font-family: -apple-
 .household-ui .cancel-complete svg { width: 16px; height: 16px; }
 .chore-watermark { position: absolute; right: 24px; top: 50%; transform: translateY(-50%) rotate(-10deg); width: 132px; height: 132px; color: var(--ui-text); opacity: .12; z-index: 0; pointer-events: none; }
 .household-ui .calendar-board .chore-watermark { display: none; }
-.household-ui .missed-stack, .household-ui .completion-history { margin-top: 18px; border-top: 1px solid var(--ui-line); }
+.household-ui .upcoming-stack, .household-ui .missed-stack, .household-ui .completion-history { margin-top: 18px; border-top: 1px solid var(--ui-line); }
 .household-ui .missed-stack .task-list { padding-bottom: 12px; }
 .household-ui .me-section-copy { padding: 0 0 16px; color: var(--ui-secondary); font-size: 12px; border: 0; }
 .household-ui .completion-record { display: grid; gap: 10px; }
