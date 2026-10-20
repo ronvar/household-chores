@@ -236,8 +236,17 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
 .history-filters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-bottom: 14px; }
 .history-filters .history-person-filter { width: 100%; margin-bottom: 0; }
 .completion-week-filter { max-width: 360px; padding-bottom: 16px; }
-.household-ui .history-chore-card { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 12px; align-items: center; }
-.household-ui .history-avatar, .household-ui .history-avatar .avatar { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 50%; overflow: hidden; line-height: 1; }
+.household-ui .completion-card { display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: 12px; align-items: center; }
+.household-ui .history-avatar, .household-ui .history-avatar .avatar { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border-radius: 50%; overflow: hidden; line-height: 1; }
+.household-ui .household-card.completion-card .record-copy { padding: 0; gap: 5px; }
+.household-ui .household-card.completion-card .record-copy>strong { font-size: 17px; }
+.household-ui .household-card.completion-card .record-copy>span { font-size: 15px; }
+.history-record-badges { display: grid; justify-items: end; gap: 6px; }
+.history-timing-badge, .history-time-badge { display: grid; justify-items: center; padding: 6px 10px; border-radius: 12px; font-size: 12px; line-height: 1.35; text-align: center; white-space: nowrap; }
+.history-timing-badge { font-weight: 650; }
+.history-timing-badge.on-time { background: color-mix(in srgb,var(--ui-green) 12%,var(--ui-card)); color: var(--ui-green); }
+.history-timing-badge.late { background: color-mix(in srgb,var(--ui-orange) 12%,var(--ui-card)); color: var(--ui-orange); }
+.history-time-badge { background: var(--ui-pill); color: var(--ui-secondary); font-variant-numeric: tabular-nums; }
 .record-copy { display: grid; gap: 4px; min-width: 0; padding-right: 16px; }
 .household-ui .history-change-card { display: grid; grid-template-columns: 31px minmax(0,1fr); gap: 12px; align-items: center; }
 .household-ui .history-change-card .change-symbol { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; color: var(--ui-blue); background: var(--ui-pill); }
@@ -285,6 +294,13 @@ body .editor-dialog .form-actions>[data-slot=button]:disabled { opacity: .4; }
   body [data-slot=dialog-content].editor-dialog { border-radius: 24px; padding: 22px; max-height: calc(100dvh - 36px); }
 }
 @media(max-width:360px) { .household-ui .layout { padding-inline: 14px; }.household-ui .topbar-inner { padding-inline: 14px; }.household-ui .brand { font-size: 24px; }.household-ui .identity-switch { padding-inline: 10px; }.household-ui .mobile-nav { left: 10px!important; right: 10px!important; }.household-ui .mobile-nav button>span { font-size: 8px; }.quick-filters>button { padding: 10px; }.quick-filters small { display: none; } }
+@media(max-width:360px) {
+  .household-ui .completion-card { grid-template-columns: 44px minmax(0,1fr) auto; gap: 9px; }
+  .household-ui .completion-card .history-avatar, .household-ui .completion-card .history-avatar .avatar { width: 44px; height: 44px; }
+  .household-ui .household-card.completion-card .record-copy>strong { font-size: 16px; }
+  .household-ui .household-card.completion-card .record-copy>span { font-size: 14px; }
+  .history-timing-badge, .history-time-badge { padding-inline: 7px; font-size: 11px; }
+}
 @media(prefers-reduced-motion:reduce) { .overview-mode button,.scope-switch button,.history-switch button,.appearance-switch button { transition: none; } }
 @media(max-width:760px) {
   .household-ui .preference-row [data-household-select] { min-height: 54px; height: 54px; }
