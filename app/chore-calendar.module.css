@@ -49,7 +49,7 @@
 .dayHeaders { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .dayHeaders > div { display: grid; place-items: center; align-content: center; gap: 8px; padding: 14px 0; border-left: 1px solid var(--calendar-line); font-size: 12px; color: var(--ui-secondary, #73737d); }
 .dayHeaders strong { display: grid; place-items: center; height: 30px; width: 30px; border-radius: 50%; color: var(--ui-text, #303038); font-size: 15px; line-height: 1; }
-.dayHeaders .today { color: var(--calendar-blue); background: #f1f7ff; }
+.dayHeaders .today { color: var(--calendar-blue); background: color-mix(in srgb, var(--ui-blue, #087cff) 12%, var(--ui-card, #fff)); }
 .dayHeaders .today strong { color: #fff; background: var(--calendar-blue); }
 .desktopRow + .desktopRow { border-top: 1px solid var(--calendar-line); }
 .desktopRow > .label { padding: 0; border-right: 1px solid var(--calendar-line); }
@@ -111,16 +111,16 @@
 .mobileTask + .mobileTask { border-top: 1px solid var(--calendar-line); }
 .miniWindow { padding: 2px 18px 18px; }
 .miniDays { --track-inset: 14px; position: relative; display: flex; justify-content: space-between; padding-inline: var(--track-inset); min-width: 0; }
-.miniDays::before { content: ""; position: absolute; top: 24px; left: var(--track-inset); right: var(--track-inset); height: 3px; border-radius: 3px; background: #d9e9ff; }
+.miniDays::before { content: ""; position: absolute; top: 24px; left: var(--track-inset); right: var(--track-inset); height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--ui-blue, #087cff) 25%, var(--ui-card, #fff)); }
 .miniDays.singleDay { justify-content: center; }
 .miniDay { position: relative; display: flex; flex-direction: column; align-items: center; flex: 0 0 0; min-width: 0; gap: 6px; color: #7e8797; font-size: 11px; line-height: 16px; }
 .miniDay i { width: 7px; height: 7px; display: block; border: 1px solid #b4d4ff; border-radius: 50%; background: var(--ui-card, #fff); }
-.miniDay .endDot { border-color: #087cff; background: #087cff; box-shadow: 0 0 0 3px #e8f2ff; }
+.miniDay .endDot { border-color: var(--ui-blue, #087cff); background: var(--ui-blue, #087cff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-blue, #087cff) 15%, var(--ui-card, #fff)); }
 .windowCaption { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 12px; line-height: 1.5; color: var(--ui-secondary, #777780); }
 .windowCaption > span { min-width: 0; }
 .deadlineText { font-weight: 650; color: #0870e8; text-align: right; }
-.miniWindow.muted .miniDays::before { background: #e8e8ed; }
-.miniWindow.muted .miniDay i { background: #eeeef3; border-color: #d8d8e0; box-shadow: none; }
+.miniWindow.muted .miniDays::before { background: var(--ui-line, #e8e8ed); }
+.miniWindow.muted .miniDay i { background: var(--ui-card, #eeeef3); border-color: var(--ui-muted, #d8d8e0); box-shadow: none; }
 .miniWindow.muted .deadlineText { color: var(--ui-muted, #8e8e98); }
 
 .carryoverHeading { gap: 10px; padding: 18px 20px 10px; color: #b56416; }

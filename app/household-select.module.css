@@ -45,8 +45,8 @@
 .viewport { padding: 6px; }
 .groupLabel { padding: 10px 10px 6px; color: var(--ui-muted, #858590); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .item { display: grid; grid-template-columns: minmax(0, 1fr) 18px; align-items: center; gap: 10px; padding: 11px 10px; border: 0; border-radius: 12px; outline: none; cursor: pointer; user-select: none; }
-.item[data-highlighted] { background: #f1f6ff; }
-.item[data-state="checked"] { background: #eaf3ff; }
+.item[data-highlighted] { background: var(--ui-pill, #f1f6ff); }
+.item[data-state="checked"] { background: color-mix(in srgb, var(--ui-blue, #087cff) 15%, var(--ui-card, #fff)); }
 .item + .item { margin-top: 3px; }
 .optionCopy { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .trigger .optionCopy { display: flex; }
@@ -63,8 +63,8 @@
 .icon > svg { width: 17px; height: 17px; display: block; }
 .icon[data-emoji] { opacity: .85; }
 .icon :global(.avatar.small) { width: 30px; height: 30px; display: grid; place-items: center; }
-.icon.positive { background: #edf7ef; color: #47945d; }
-.icon.negative { background: #fff1f0; color: #c76865; }
+.icon.positive { background: color-mix(in srgb, var(--ui-green, #47945d) 12%, var(--ui-card, #fff)); color: var(--ui-green, #47945d); }
+.icon.negative { background: color-mix(in srgb, var(--ui-red, #c76865) 12%, var(--ui-card, #fff)); color: var(--ui-red, #c76865); }
 .check { display: grid; place-items: center; width: 18px; height: 18px; color: #087cff; }
 .check svg { display: block; width: 16px; height: 16px; }
 .scroll { display: grid; place-items: center; height: 24px; background: var(--ui-card, #fff); color: var(--ui-muted, #858590); }

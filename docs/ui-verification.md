@@ -17,3 +17,12 @@ Before publishing calendar or chore-row changes:
 - Swipe rows: test a small drag that snaps closed, partial reveal, full swipe, direction reversal, outside dismissal, scrolling, cancellation, and keyboard alternatives. Right is green completion/reopen; left is blue trade. Full completion swipes must still require confirmation before sending a mutation.
 - Swipe permissions must match button permissions: another person’s chores and missed turns cannot be completed or traded; unopened turns cannot be completed. Recheck ownership when live data changes during confirmation. Test save failure and retry without losing the pending confirmation.
 - Pending starts expanded, Completed is a separate collapse, and completed chores must not also appear in the pending list. Completion and reopening update both counts and household progress. Check these in Calendar and List; both support swipes, with no visible point labels or right-side action buttons on chore cards.
+- In both themes, inspect computed action-button backgrounds after revealing each swipe: completion is `rgb(52, 199, 89)` and trade is `rgb(0, 122, 255)`. Card-surface rules must never target action buttons via their `tabindex` attributes.
+- Inspect dark sidebar, preferences (including a new unsaved row), dropdown selections, filter-menu items, editor forms, notification controls, history, and confirmation surfaces. Intentional profile colors and semantic action colors remain distinct from card backgrounds.
+
+## Theme and swipe follow-up verification
+
+- Local in-app browser: light and dark layouts measured at 320, 393, 768, and 1280px without horizontal overflow.
+- Confirmed green completion reveal and blue trade reveal, including a native left drag on the 393px layout; no completion or trade mutations submitted.
+- Visually inspected dark Me, preference-strength popup, Household, Add chore modal, and History. Watermarks are 120px on mobile and 132px on desktop, shifted inward horizontally and cropped vertically at card edges.
+- TypeScript, production build, and whitespace checks pass. Physical iPhone/Safari verification remains outstanding.
